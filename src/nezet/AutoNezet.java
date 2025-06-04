@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import modell.Auto;
 
 
@@ -118,9 +119,19 @@ public class AutoNezet extends javax.swing.JFrame {
         jMenuFeladatok.setText("Feladatok");
 
         jMenuItemOsszbevetel.setText("xyz-456 összbevetel");
+        jMenuItemOsszbevetel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemOsszbevetelActionPerformed(evt);
+            }
+        });
         jMenuFeladatok.add(jMenuItemOsszbevetel);
 
         jMenuItemLehetDohanyozni.setText("minden autóban lehet dohányozni?");
+        jMenuItemLehetDohanyozni.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemLehetDohanyozniActionPerformed(evt);
+            }
+        });
         jMenuFeladatok.add(jMenuItemLehetDohanyozni);
 
         jMenuItemLeghosszabbFuvar.setText("leghosszabb fuvar");
@@ -221,6 +232,35 @@ public class AutoNezet extends javax.swing.JFrame {
     private void jMenuItemKilepesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemKilepesActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItemKilepesActionPerformed
+
+    private void jMenuItemOsszbevetelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemOsszbevetelActionPerformed
+        String rendszam = "xyz-456";
+        JOptionPane.showMessageDialog(rootPane, "Az %s rendszám autó összbevetele: %d Ft".formatted(rendszam,osszbevetel(rendszam)));
+    }//GEN-LAST:event_jMenuItemOsszbevetelActionPerformed
+    private int osszbevetel(String rendszam){
+    int osszbevetel = 0;
+        for (int i = 0; i < autok.size(); i++) {
+            if (autok.get(i).getRendszam().equals(rendszam)) {
+                osszbevetel += autok.get(i).getOsszeg() + autok.get(i).getBorravalo();
+            }
+        }
+        return osszbevetel;
+    }
+    private void jMenuItemLehetDohanyozniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemLehetDohanyozniActionPerformed
+       JOptionPane.showMessageDialog(rootPane, "%s lehet minden autóban dohányozni.".formatted(dohanyzas()?"Nem":"Igen, "));
+    }//GEN-LAST:event_jMenuItemLehetDohanyozniActionPerformed
+    private boolean dohanyzas(){
+    int hossz = autok.size();
+    int i = 0;
+    
+    while( i < hossz && autok.get(i).isDohanyzo()){
+        i++;
+    }
+    return i < hossz;
+    }
+    
+    
+    
     
     public void megjelenit(Auto auto){
     jTextFieldFizetes.setText(auto.getFizetesmod());

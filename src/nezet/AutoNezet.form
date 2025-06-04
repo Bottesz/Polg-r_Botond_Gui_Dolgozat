@@ -41,11 +41,17 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="xyz-456 &#xf6;sszbevetel"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemOsszbevetelActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItemLehetDohanyozni">
               <Properties>
                 <Property name="text" type="java.lang.String" value="minden aut&#xf3;ban lehet doh&#xe1;nyozni?"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemLehetDohanyozniActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItemLeghosszabbFuvar">
               <Properties>
