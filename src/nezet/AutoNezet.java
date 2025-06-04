@@ -53,7 +53,12 @@ public class AutoNezet extends javax.swing.JFrame {
 
         jMenuItem3.setText("jMenuItem3");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Rendszam/Datum"));
 
@@ -135,6 +140,11 @@ public class AutoNezet extends javax.swing.JFrame {
         jMenuFeladatok.add(jMenuItemLehetDohanyozni);
 
         jMenuItemLeghosszabbFuvar.setText("leghosszabb fuvar");
+        jMenuItemLeghosszabbFuvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemLeghosszabbFuvarActionPerformed(evt);
+            }
+        });
         jMenuFeladatok.add(jMenuItemLeghosszabbFuvar);
 
         jMenuItemKikDolgoztak.setText("kik dolgoztak 2022.12.31-én?");
@@ -249,6 +259,7 @@ public class AutoNezet extends javax.swing.JFrame {
     private void jMenuItemLehetDohanyozniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemLehetDohanyozniActionPerformed
        JOptionPane.showMessageDialog(rootPane, "%s lehet minden autóban dohányozni.".formatted(dohanyzas()?"Nem":"Igen, "));
     }//GEN-LAST:event_jMenuItemLehetDohanyozniActionPerformed
+
     private boolean dohanyzas(){
     int hossz = autok.size();
     int i = 0;
@@ -259,8 +270,30 @@ public class AutoNezet extends javax.swing.JFrame {
     return i < hossz;
     }
     
+    private void jMenuItemLeghosszabbFuvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemLeghosszabbFuvarActionPerformed
+        int leghosszabbIndex = hosszufuvar();
+        JOptionPane.showMessageDialog(rootPane, "A leghosszabb fuvar a(z) %s rendszámú autóé volt (%.2f km)".formatted(autok.get(leghosszabbIndex).getRendszam(), autok.get(leghosszabbIndex).getTav()));
+    }//GEN-LAST:event_jMenuItemLeghosszabbFuvarActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+       int kilep = JOptionPane.showConfirmDialog(rootPane, "Biztosan ki akarsz lepni?","Kilépes",JOptionPane.YES_OPTION);
+        if (kilep == JOptionPane.YES_OPTION ) {
+            System.exit(0);
+        }
+    }//GEN-LAST:event_formWindowClosing
+    
+    private int hosszufuvar(){
+    int MaxIndex = 0;
+        for (int i = 0; i < autok.size(); i++) {
+            if (autok.get(i).getTav()> autok.get(MaxIndex).getTav()) {
+                MaxIndex = i;
+            }
+        }
+        return MaxIndex;
+    }
     
     
+
     
     public void megjelenit(Auto auto){
     jTextFieldFizetes.setText(auto.getFizetesmod());
